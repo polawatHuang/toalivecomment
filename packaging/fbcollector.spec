@@ -1,8 +1,19 @@
 # -*- mode: python ; coding: utf-8 -*-
-"""PyInstaller spec for Facebook Live Collector Pro (onefile Windows build).
+"""PyInstaller spec for Facebook Live Collector Pro (onedir Windows build).
 
 Build with: pyinstaller --clean --noconfirm packaging/fbcollector.spec
 (or simply: python scripts/build_exe.py)
+
+Deliberately onedir, not onefile, despite the spec's "Single EXE" wording. Onefile
+re-extracts its entire bundle (600+ files - numpy, PIL, Tcl/Tk, Playwright,
+customtkinter) to a fresh %TEMP% folder on *every single launch*. On a machine with
+endpoint security software that scans each extracted file synchronously, this measured
+over 5 minutes per launch and still hadn't finished - a direct violation of the spec's
+own "One-click operation" requirement. Onedir extracts once, at install time (via the
+Inno Setup installer in installer.iss), then launches near-instantly on every run after.
+The end user still gets a single installer .exe to double-click (see installer.iss);
+only the *runtime* representation changed from one exe to an exe + a folder of
+dependencies sitting next to it.
 
 Two known frozen-build pitfalls this spec deliberately guards against:
 
@@ -64,12 +75,16 @@ pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 exe = EXE(
     pyz,
     a.scripts,
-    a.binaries,
-    a.zipfiles,
-    a.datas,
     [],
+    exclude_binaries=True,
     name="FBLiveCollectorPro",
     console=False,
     icon=f"{REPO_ROOT}/assets/icons/app.ico",
-    onefile=True,
+)
+coll = COLLECT(
+    exe,
+    a.binaries,
+    a.zipfiles,
+    a.datas,
+    name="FBLiveCollectorPro",
 )
