@@ -14,11 +14,18 @@ Two known frozen-build pitfalls this spec deliberately guards against:
    therefore never need Playwright's own browser binaries. ``collect_all`` handles this.
 """
 
+import os
+
 from PyInstaller.utils.hooks import collect_all, collect_data_files
 
 block_cipher = None
 
-REPO_ROOT = ".."
+# SPECPATH is injected by PyInstaller into the spec's globals and always points at the
+# directory containing this .spec file, regardless of the CWD `pyinstaller` was invoked
+# from. A hand-rolled relative path like ".." breaks depending on invocation directory -
+# that broke this exact build once already (fbcollector wasn't found/bundled at all,
+# producing a frozen exe that failed at startup with ModuleNotFoundError: fbcollector).
+REPO_ROOT = os.path.abspath(os.path.join(SPECPATH, ".."))  # noqa: F821
 
 ctk_datas, ctk_binaries, ctk_hidden = collect_all("customtkinter")
 pw_datas, pw_binaries, pw_hidden = collect_all("playwright")
