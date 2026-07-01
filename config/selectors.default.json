@@ -1,0 +1,18 @@
+{
+  "_caveat": "BEST-EFFORT selectors, unverified against a live Facebook page. Facebook's DOM is obfuscated and changes without notice. If comment detection stops working, open the Live page in Chrome DevTools (F12), inspect a comment element, update the values below, and click 'Reload Selectors' in Settings > Selectors (no app restart needed).",
+  "comment_container": "[role=\"article\"]",
+  "username_selectors": [
+    "[aria-label] a[role=\"link\"]",
+    "h3 a",
+    "h4 a",
+    "span a"
+  ],
+  "text_selectors": [
+    "[data-ad-preview=\"message\"]",
+    "div[dir='auto']",
+    "span[dir='auto']"
+  ],
+  "aria_label_pattern": "^(?P<username>.+?) commented[: ]+(?P<comment>.*)$",
+  "version": "1.0-best-effort",
+  "notes": "role=article is Facebook's long-standing semantic wrapper for feed/comment items; username/text selectors are an ordered fallback chain tried in turn until one yields text."
+}

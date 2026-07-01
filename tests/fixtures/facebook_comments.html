@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<!--
+  Hand-authored approximation of Facebook's comment markup structure (role="article"
+  wrappers, aria-label heuristics). This is NOT verified against real Facebook - it only
+  exercises CommentExtractor's parsing logic against a stable, known structure.
+-->
+<html>
+<head><meta charset="utf-8"></head>
+<body>
+  <div role="article" aria-label="Jane Doe commented: Great stream, thanks!">
+    <h3><a role="link" href="/profile.php?id=1">Jane Doe</a></h3>
+    <div data-ad-preview="message">Great stream, thanks!</div>
+  </div>
+  <div role="article" aria-label="John Smith commented: My employee id is 123456">
+    <h3><a role="link" href="/profile.php?id=2">John Smith</a></h3>
+    <div data-ad-preview="message">My employee id is 123456</div>
+  </div>
+  <div role="article" aria-label="Anonymous commented: No structured fields, fallback only">
+  </div>
+</body>
+</html>

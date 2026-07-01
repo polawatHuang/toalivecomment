@@ -1,0 +1,8 @@
+{
+  "employee_id_regex": "\\b\\d{4,10}\\b",
+  "csv_folder": "",
+  "auto_save_interval_seconds": 5,
+  "theme": "dark",
+  "language": "en",
+  "animation_speed": "normal"
+}

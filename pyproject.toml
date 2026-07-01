@@ -1,0 +1,25 @@
+[project]
+name = "fbcollector"
+version = "1.0.0"
+description = "Facebook Live Collector Pro - Enterprise Edition"
+requires-python = ">=3.12"
+readme = "README.md"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+
+[tool.black]
+line-length = 110
+target-version = ["py312"]
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
